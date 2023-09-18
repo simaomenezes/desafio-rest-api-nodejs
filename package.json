@@ -1,0 +1,17 @@
+{
+  "name": "desafio-rest-api-nodejs",
+  "version": "1.0.0",
+  "description": "Daily Diet API.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fastify": "^4.23.2"
+  },
+  "devDependencies": {
+    "tsx": "^3.12.10"
+  }
+}
