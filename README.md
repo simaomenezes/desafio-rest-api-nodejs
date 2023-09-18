@@ -14,12 +14,12 @@ Nesse desafio você praticará o desenvolvimento de uma API REST para controle d
 - [ ] Deve ser possível visualizar uma única refeição
 
 # RN
-    - [ ] Deve ser possível identificar o usuário entre as requisições
-    - [ ] As refeições devem ser relacionadas a um usuário.
-    - [ ] Deve ser possível listar todas as refeições de um usuário.
-    - [ ] Deve ser possível recuperar as métricas de um usuário
-        - [ ] Quantidade total de refeições registradas
-        - [ ] Quantidade total de refeições dentro da dieta
-        - [ ] Quantidade total de refeições fora da dieta
-        - [ ] Melhor sequência de refeições dentro da dieta
-    - [ ] O usuário só pode visualizar, editar e apagar as refeições o qual ele criou
+- [ ] Deve ser possível identificar o usuário entre as requisições
+- [ ] As refeições devem ser relacionadas a um usuário.
+- [ ] Deve ser possível listar todas as refeições de um usuário.
+- [ ] Deve ser possível recuperar as métricas de um usuário
+    - [ ] Quantidade total de refeições registradas
+    - [ ] Quantidade total de refeições dentro da dieta
+    - [ ] Quantidade total de refeições fora da dieta
+    - [ ] Melhor sequência de refeições dentro da dieta
+- [ ] O usuário só pode visualizar, editar e apagar as refeições o qual ele criou
