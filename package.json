@@ -4,7 +4,11 @@
   "description": "Daily Diet API.",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts"
+    "dev": "tsx watch src/server.ts",
+    "knex": "node --loader tsx ./node_modules/knex/bin/cli.js --knexfile ./knexfile.ts",
+    "lint": "eslint src --ext .ts --fix",
+    "build": "tsup src --out-dir build",
+    "test": "vitest"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +16,7 @@
     "dotenv": "^16.3.1",
     "fastify": "^4.23.2",
     "knex": "^2.5.1",
+    "sqlite3": "^5.1.6",
     "zod": "^3.22.2"
   },
   "devDependencies": {
