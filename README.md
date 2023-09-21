@@ -23,3 +23,8 @@ Nesse desafio você praticará o desenvolvimento de uma API REST para controle d
     - [ ] Quantidade total de refeições fora da dieta
     - [ ] Melhor sequência de refeições dentro da dieta
 - [ ] O usuário só pode visualizar, editar e apagar as refeições o qual ele criou
+
+
+# Help
+- run migration
+    - npm run knex -- migrate:make nome_migrate
