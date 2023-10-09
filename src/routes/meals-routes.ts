@@ -9,18 +9,16 @@ export async function mealsRoutes(app: FastifyInstance) {
         const createMealBodySchema = z.object({
             name: z.string(),
             description: z.string(),
-            created_at:  z.string().datetime(),
             isInDiet: z.boolean(),
             user_id: z.string(),            
         })
 
-        const { name, description, created_at, isInDiet, user_id } = createMealBodySchema.parse(request.body)
+        const { name, description, isInDiet, user_id } = createMealBodySchema.parse(request.body)
 
         await knex('meals').insert({
             id: randomUUID(),
             name,
             description,
-            created_at,
             isInDiet,
             user_id,
         })
@@ -34,18 +32,17 @@ export async function mealsRoutes(app: FastifyInstance) {
 
     })
 
-    app.get('/:id', async(request, reply) => {
+    app.get('/:id', async(request) => {
         const getMealsParamsSchema = z.object({
-            user_id: z.string().uuid(),
+            id: z.string().uuid(),
         })
 
-        const { user_id } = getMealsParamsSchema.parse(request.params)
-
+        const { id } = getMealsParamsSchema.parse(request.params)
+        
         const meals = await knex('meals')
             .where({
-                user_id,
+                user_id:id,
             })
-            .first()
         return { meals }
     })
 }
