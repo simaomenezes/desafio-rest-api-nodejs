@@ -8,9 +8,9 @@ Nesse desafio você praticará o desenvolvimento de uma API REST para controle d
 # RF
 - [x] Deve ser possível criar um usuário.
 - [x] Deve ser possível registrar uma refeição feita.
-- [ ] Deve ser possível listar todas as refeições de um usuário.
-- [ ] Deve ser possível editar uma refeição, podendo alterar todos os dados.
-- [ ] Deve ser possível apagar uma refeição
+- [x] Deve ser possível listar todas as refeições de um usuário.
+- [x] Deve ser possível editar uma refeição, podendo alterar todos os dados.
+- [x] Deve ser possível apagar uma refeição
 - [ ] Deve ser possível visualizar uma única refeição
 
 # RN

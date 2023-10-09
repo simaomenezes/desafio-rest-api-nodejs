@@ -45,4 +45,45 @@ export async function mealsRoutes(app: FastifyInstance) {
             })
         return { meals }
     })
+
+    app.delete('/:id', async(request) => {
+        const getMealsParamsSchema = z.object({
+            id: z.string().uuid(),
+        })
+
+        const { id } = getMealsParamsSchema.parse(request.params)
+        
+        const meals = await knex('meals')
+            .where({
+                id:id,
+            })
+            .delete()
+        return { meals }
+    })
+
+    app.put('/', async (request, reply) => {
+        const updateMealBodySchema = z.object({
+            id: z.string().uuid(),
+            name: z.string(),
+            description: z.string(),
+            isInDiet: z.boolean()           
+        })
+        
+        const { id, name, description, isInDiet } = updateMealBodySchema.parse(request.body)
+
+        const meal = await knex('meals')
+        .where({
+            id:id,
+        })
+
+        await knex('meals').update({
+            name,
+            description,
+            isInDiet,
+        }).where({
+            id:id
+        })
+
+        return reply.status(201).send()
+    })
 }
