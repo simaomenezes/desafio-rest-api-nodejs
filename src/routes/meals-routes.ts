@@ -98,4 +98,40 @@ export async function mealsRoutes(app: FastifyInstance) {
             
         return { countMealByUser }
     })
+
+    app.get('/count-meals-in/:id', async(request) => {
+
+        const getMealsParamsSchema = z.object({
+            id: z.string().uuid(),
+        })
+
+        const { id } = getMealsParamsSchema.parse(request.params)
+
+        const countMealInDiet = await knex('meals')
+            .where({
+                user_id: id,
+                isInDiet: true
+            })
+            .count({count: '*'})
+            
+        return { countMealInDiet }
+    })
+
+    app.get('/count-meals-out/:id', async(request) => {
+
+        const getMealsParamsSchema = z.object({
+            id: z.string().uuid(),
+        })
+
+        const { id } = getMealsParamsSchema.parse(request.params)
+
+        const countMealOutDiet = await knex('meals')
+            .where({
+                user_id: id,
+                isInDiet: false
+            })
+            .count({count: '*'})
+            
+        return { countMealOutDiet }
+    })
 }
