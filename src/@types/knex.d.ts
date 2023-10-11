@@ -5,6 +5,7 @@ declare module 'Knex/types/table' {
   export interface table {
     users: {
       id: string
+      session_id: string
       name: string
       email: string
     }

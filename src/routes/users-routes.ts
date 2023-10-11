@@ -13,10 +13,32 @@ export async function usersRoutes(app: FastifyInstance) {
 
         const { name, email } = createUserBodySchema.parse(request.body)
 
+        const userExist = await knex('users').where({
+            email
+        }).first()
+
+        if(userExist) {
+            return reply.status(400).send({
+                error: 'User exist!',
+            })
+        }
+
+        let sessionId = request.cookies.sessionId
+
+        if (!sessionId) {
+            sessionId = randomUUID()
+      
+            reply.cookie('sessionId', sessionId, {
+              path: '/meals', // apenas as rotas /meals podem acessar ao cookie
+              maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+            })
+          }
+
         await knex('users').insert({
             id: randomUUID(),
             name,
             email,
+            session_id:sessionId,
         })
 
         return reply.status(201).send()
