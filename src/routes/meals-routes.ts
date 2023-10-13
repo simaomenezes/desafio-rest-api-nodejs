@@ -3,6 +3,7 @@ import { FastifyInstance } from "fastify"
 import { knex } from "../database"
 import { randomUUID } from "crypto"
 import { checSessionIdExist } from "../midlewares/check-session-id-exsit"
+import { calcBestSqDiet } from "../utils/calc-best-sq-diet"
 
 export async function mealsRoutes(app: FastifyInstance) {
 
@@ -213,4 +214,32 @@ export async function mealsRoutes(app: FastifyInstance) {
             
         return { countMealOutDiet }
     })
+
+
+    app.get('/bestsequence',
+        { preHandler: [checSessionIdExist] }, async (request, reply) => {
+            
+            const { sessionId } = request.cookies
+            const [user] = await knex('users')
+                .where({
+                    session_id:sessionId
+                }).select('id')
+    
+            const user_id = user.id
+            
+            const meals = await knex.table('meals').where('user_id', user_id).select('*')
+            
+            const mealsInDiet = meals.filter(({ isInDiet }) => isInDiet)
+            
+            return reply.status(200).send({
+                user,
+                metrics: {
+                    totalMeals: meals.length,
+                    inDiet: mealsInDiet.length,
+                    offTheDiet: meals.length - mealsInDiet.length,
+                    bestSequence: calcBestSqDiet(meals),
+                },
+            })
+        },
+    )
 }
