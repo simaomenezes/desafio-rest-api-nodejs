@@ -8,37 +8,37 @@ export async function mealsRoutes(app: FastifyInstance) {
 
     app.post('/',
         { preHandler: [checSessionIdExist] },
-     async (request, reply) => {
+        async (request, reply) => {
+            const { sessionId } = request.cookies
+            
+            const [user] = await knex('users')
+                .where({
+                    session_id:sessionId
+                }).select('id')
+            
+            const user_id = user.id
+            
+            const createMealBodySchema = z.object({
+                name: z.string(),
+                description: z.string(),
+                isInDiet: z.boolean(),
+            })
 
-        const { sessionId } = request.cookies
+            const { name, description, isInDiet } = createMealBodySchema.parse(request.body)
 
-        const [user] = await knex('users')
-            .where({
-                session_id:sessionId
-            }).select('id')
-
-        const user_id = user.id
-
-        const createMealBodySchema = z.object({
-            name: z.string(),
-            description: z.string(),
-            isInDiet: z.boolean(),
+            await knex('meals').insert({
+                id: randomUUID(),
+                name,
+                description,
+                isInDiet,
+                user_id,
+            })
+            return reply.status(201).send()
         })
-
-        const { name, description, isInDiet } = createMealBodySchema.parse(request.body)
-
-        await knex('meals').insert({
-            id: randomUUID(),
-            name,
-            description,
-            isInDiet,
-            user_id,
-        })
-
-        return reply.status(201).send()
-    })
-
-    app.get('/', async(request, reply) => {
+    
+    app.get('/',
+        { preHandler: [checSessionIdExist] },
+     async(request, reply) => {
         const meals = await knex('meals').select()
         return { meals }
 
@@ -78,11 +78,7 @@ export async function mealsRoutes(app: FastifyInstance) {
             }).select('id')
 
         const user_id = user.id
-
-
-
-
-
+        
         const getMealsParamsSchema = z.object({
             id: z.string().uuid(),
         })
@@ -179,9 +175,6 @@ export async function mealsRoutes(app: FastifyInstance) {
             }).select('id')
 
         const user_id = user.id
-
-
-
 
         const countMealInDiet = await knex('meals')
             .where({
